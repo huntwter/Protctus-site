@@ -1,0 +1,18 @@
+// server/db.ts
+import "dotenv/config";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Pool } from "pg";
+
+if (!process.env.DATABASE_URL) {
+  throw new Error("❌ DATABASE_URL not found. Check your .env file path!");
+}
+
+// Neon requires SSL
+export const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+});
+
+export const db = drizzle(pool);
+
+console.log("✅ Database connection initialized successfully!");
