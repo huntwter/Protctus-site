@@ -1,0 +1,27 @@
+name: Build Node and React
+on:
+  push:
+    branches: [ main, master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Install Dependencies
+        run: npm install
+        
+      - name: Run Build Command
+        run: npm run build
+        
+      - name: Upload dist folder
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-dist
+          path: dist/
